@@ -6,7 +6,7 @@ import os
 
 PI = numpy.pi
 
-f = '21.wav'#replace this with the filepath of your desired sound
+f = 'test.wav'#replace this with the filepath of your desired sound
 interval = .1 #must be <1
 
 def get_freqs(file):
@@ -30,17 +30,17 @@ def get_freqs(file):
 		img = a.imag
 		freqs =abs(fourier.fftfreq(len(a),8000)/(2*PI))
 
-		#plt.semilogy(freqs,mag,'b.')
+		plt.semilogy(freqs,mag,'b.')
 		#plt.ylim([10^-1,10^7])
 
 		name = sig+str(i)
 
-		#plt.savefig(path+name+'.png')
+		plt.savefig(path+name+'.png')
 		#plt.show()
 		plt.clf()
 		fft_data.append(a)
 
-	print fft_data
+	#print fft_data
 
 	numpy.save(path+'data',data)
 	numpy.append(path+'fft_results', fft_data)
