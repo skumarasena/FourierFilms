@@ -3,10 +3,13 @@ import numpy.fft as fourier
 import numpy
 import matplotlib.pyplot as plt
 import os
+import example2.py
 
 PI = numpy.pi
 
-f = 'highlow.wav'#replace this with the filepath of your desired sound
+#todo: shift things, filter things
+
+f = 'piano.wav'#replace this with the filepath of your desired sound
 interval = .1 #must be <1
 
 def get_freqs(file):
@@ -27,12 +30,12 @@ def get_freqs(file):
 		stop = int((i)*numstep)
 
 		a = fourier.fft(data[start:stop])
-		mag = numpy.absolute(a)
+		mag = numpy.absolute(a[1:])
 		img = a.imag
-		freqs =abs(fourier.fftfreq(len(a),1.0/rate))
+		freqs =abs(fourier.fftfreq(len(a[1:]),1.0/rate))
 
 		plt.plot(freqs,mag,'b.')
-		#plt.ylim([10^-1,10^7])
+		plt.ylim([0,30000])# find a way to set this that isn't arbitrary...
 
 		name = sig+str(i)
 
@@ -41,10 +44,9 @@ def get_freqs(file):
 		plt.clf()
 		fft_data.append(a)
 
-	#print fft_data
-
 	numpy.save(path+'data',data)
-	numpy.append(path+'fft_results', fft_data)
-		
-get_freqs(f)
+	#todo: put a copy of the .wav in the new folder, save the frequencies and amplitudes
+	return dirname
+
+
 
