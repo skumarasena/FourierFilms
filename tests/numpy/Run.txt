@@ -1,0 +1,6 @@
+1. Open test_fft.py and change f to the name of your desired filename.wav file.  Make sure the .wav is in the same folder as test_fft
+2. Run test_ff
+3. Copy example2.py from one of the other folders to filename_data (folder created by test_fft)
+4. Open example2.py and set the framerate (at the bottom) to 1/the time division used by test_fft (called interval)
+5. Run example2.py. This should produce a file called output.avi in filename_data.
+6. To test, cd to filename use mplayer output.avi
