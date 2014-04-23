@@ -65,8 +65,10 @@ except OSError:
 # See the MPlayer and Mencoder documentation for details.
 #
 
+# Figured out how to swap in a filepath... Now do this with user input. That would be cool.
+# Also got audio working.
 command = ('mencoder',
-           'mf://*.png',
+           'mf://piano_data/piano_*.png',
            '-mf',
            'type=png:w=800:h=600:fps=10',
            '-ovc',
@@ -76,12 +78,16 @@ command = ('mencoder',
            '-oac',
            'copy',
            '-o',
-           'output.avi')
+           'output.avi',
+           '-audiofile',
+           'piano.wav')
 
 #os.spawnvp(os.P_WAIT, 'mencoder', command)
 
 print("\n\nabout to execute:\n%s\n\n" % ' '.join(command))
 subprocess.check_call(command)
+
+#change the name of the movie file so we can make a distinction!
 
 print("\n\n The movie was written to 'output.avi'")
 
