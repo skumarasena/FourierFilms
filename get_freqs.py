@@ -21,8 +21,6 @@ def get_freqs(file, interval = .1):
 	len_row = int(numstep)
 	num_rows = int(len(data)/numstep)
 
-	print len(data)
-
 	freq_array = np.zeros((num_rows,len_row))
 	amp_array = np.zeros((num_rows,len_row))
 	phase_array = np.zeros((num_rows,len_row))
@@ -30,9 +28,7 @@ def get_freqs(file, interval = .1):
 	for i in range(1, num_rows):
 
 		start = int((i-1)*numstep)
-		print start
 		stop = int((i)*numstep)
-		print stop
 
 		a = fourier.fft(data[start:stop])
 		mag = np.absolute(a)
