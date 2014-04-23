@@ -18,8 +18,10 @@ def get_freqs(file, interval = .1):
 
 	numstep = rate*interval
 
-	len_row = int(numstep-1)#-1 is to account for the removal of 0
-	num_rows = int(len(data)/numstep)-2#-1 because we go from 1 in loop
+	len_row = int(numstep)
+	num_rows = int(len(data)/numstep)
+
+	print len(data)
 
 	freq_array = np.zeros((num_rows,len_row))
 	amp_array = np.zeros((num_rows,len_row))
@@ -28,12 +30,15 @@ def get_freqs(file, interval = .1):
 	for i in range(1, num_rows):
 
 		start = int((i-1)*numstep)
+		print start
 		stop = int((i)*numstep)
+		print stop
 
 		a = fourier.fft(data[start:stop])
-		mag = np.absolute(a[1:])
-		freqs = abs(fourier.fftfreq(len(a[1:]),1.0/rate))
-		angles = np.angle(a[1:])
+		mag = np.absolute(a)
+		mag[0] = 0
+		freqs = abs(fourier.fftfreq(len(a),1.0/rate))
+		angles = np.angle(a)
 
 		freq_array[i-1] = freqs
 		amp_array[i-1] = mag
