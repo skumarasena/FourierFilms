@@ -68,6 +68,9 @@ import sys                        # For determining the Python version.
 
 # Figured out how to swap in a filepath... Now do this with user input. That would be cool.
 # Also got audio working.
+
+# name = name of file, minus its extension. I.e.  the name of 'notes.wav' would be 'notes'
+# plot_type = the type of plot. Either 'bode', 'pretty', or 'xkcd'
 def make_video(name, plot_type):
 
     path = "mf://" + name + '_data/' + plot_type + '*.png'
