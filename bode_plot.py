@@ -1,7 +1,9 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-def make_plot(dirname):
+def make_bplot(sig):
+
+	dirname = sig + '_data'
 	
 	freqs = np.load(dirname+'/freqs.npy')
 

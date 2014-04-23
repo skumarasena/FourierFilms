@@ -10,11 +10,11 @@ file = 'notes.wav'
 def get_freqs(file, interval = .1):
 	rate, data = wavf.read(file)
 	sig = (str(file).split('.'))[0] 
-	dirname = sig+'_data'
 
-	path = dirname + '/'
 
-	if not os.path.exists(dirname):os.mkdir(dirname)
+	path = sig + '_data'
+
+	if not os.path.exists(path):os.mkdir(path)
 
 	numstep = rate*interval
 
@@ -40,11 +40,11 @@ def get_freqs(file, interval = .1):
 		amp_array[i-1] = mag
 		phase_array[i-1] = angles
 
-	np.save(path+'freqs.npy',freq_array)
-	np.save(path+'amp.npy',amp_array)
-	np.save(path+'phase.npy',phase_array)
+	np.save(path+'/'+'freqs.npy',freq_array)
+	np.save(path+'/'+'amp.npy',amp_array)
+	np.save(path+'/'+'phase.npy',phase_array)
 
-	return (dirname, rate, interval)
+	return (sig, rate, interval)
 
 if __name__=="__main__":
 	print get_freqs(file)
