@@ -62,7 +62,7 @@ except OSError:
 # call to Mencoder.  Specifically, the command line call we want to
 # emulate is (without the initial '#'):
 # mencoder mf://*.png -mf type=png:w=800:h=600:fps=25 -ovc lavc -lavcopts vcodec=mpeg4 -oac copy -o output.avi
-# See the MPlayer and Mencoder documentation for details.
+# See the MPlayer and MEncoder documentation for details.
 #
 
 # Figured out how to swap in a filepath... Now do this with user input. That would be cool.
