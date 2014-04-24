@@ -44,4 +44,4 @@ def make_bplot(sig):
 		plt.clf()
 
 if __name__=="__main__":
-	make_plot('notes_data',14400)
+	make_plot('notes_data',44100)
