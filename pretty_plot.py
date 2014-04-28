@@ -1,13 +1,14 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-def make_bplot(sig,to_plot):
+def make_pplot(sig,to_plot):
 
 	dirname = sig + '_data'
 
 	freqs = {}
 	phase = {}
 	amp = {}
+	colorlist = 'brg'
 
 	for name in to_plot:#todo... adapt this to multiple data sets
 		freqs[name] = np.load(dirname+'/'+name+'_freqs.npy')
@@ -25,32 +26,18 @@ def make_bplot(sig,to_plot):
 
 	for i in range(0,freqs['base'].shape[0]-1):
 
-		plt.subplot(211)
 		plt.xlabel('Frequency (Hz)')
 		plt.ylabel('Magnitude')
 
-		for name in to_plot:
-			plt.loglog(freqs[name][i],amp[name][i],'.',label = name)
+		for j in range(0, len(to_plot)):
+			plt.bar(freqs[to_plot[j]][i]+2*j,amp[to_plot[j]][i],width = .5,label = to_plot[j],color = colorlist[j],edgecolor = colorlist[j])
 
 		plt.ylim([0,am])
-		plt.xlim([0,xm])
+		plt.xlim([0,1000])
 
-		plt.subplot(212)
-		plt.xlabel('Frequency (Hz)')
-		plt.ylabel('Phase (rad)')
+		plt.legend()
 
-
-		for name in to_plot:
-			plt.semilogx(freqs[name][i],phase[name][i],label = name)
-
-		plt.ylim([pmi-1,pm+1])
-		plt.xlim([0,xm])
-
-		fig = plt.gcf()
-		fig.subplots_adjust(hspace = .3)
-		plt.legend(bbox_to_anchor=(1.1,1.4))
-
-		plt.savefig(dirname+'/bode'+str(i)+'.png')
+		plt.savefig(dirname+'/pretty'+str(i)+'.png')
 		plt.clf()
 
 if __name__=="__main__":
