@@ -54,3 +54,4 @@ def make_bplot(sig,to_plot):
 
 if __name__=="__main__":
 	make_bplot('notes',['base'])
+
