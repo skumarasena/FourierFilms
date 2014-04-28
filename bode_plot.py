@@ -1,39 +1,48 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-def make_bplot(sig):
+def make_bplot(sig,to_plot):
 
 	dirname = sig + '_data'
-	
-	freqs = np.load(dirname+'/freqs.npy')
 
-	phase = np.load(dirname+'/phase.npy')
+	freqs = {}
+	phase = {}
+	amp = {}
 
-	amp = np.load(dirname+'/amp.npy')
+	for name in to_plot:#todo... adapt this to multiple data sets
+		freqs[name] = np.load(dirname+'/'+name+'_freqs.npy')
+		phase[name] = np.load(dirname+'/'+name+'_phase.npy')
+		amp[name] = np.load(dirname+'/'+name+'_amp.npy') 
 
-	xm = np.amax(freqs)
+	xm = np.amax(freqs['base'])
 
-	am = np.amax(amp)
-	ami = np.amin(amp)
+	am = np.amax(amp['base'])
 
-	pm = np.amax(phase)
-	pmi = np.amin(phase)
+	pm = np.amax(phase['base'])
+	pmi = np.amin(phase['base'])
 
 	plt.autoscale(enable = False)
 
-	for i in range(0,freqs.shape[0]-1):
+	for i in range(0,freqs['base'].shape[0]-1):
 
 		plt.subplot(211)
-		plt.loglog(freqs[i],amp[i],'b.')
 		plt.xlabel('Frequency (Hz)')
 		plt.ylabel('Magnitude')
-		plt.ylim([ami/100, am*10])
+
+		for name in to_plot:
+			plt.semilogx(freqs[name][i],amp[name][i],'.')
+
+		plt.ylim([0,am])
 		plt.xlim([0,xm])
 
 		plt.subplot(212)
-		plt.semilogx(freqs[i],phase[i])
 		plt.xlabel('Frequency (Hz)')
 		plt.ylabel('Phase (rad)')
+
+
+		for name in to_plot:
+			plt.semilogx(freqs[name][i],phase[name][i])
+
 		plt.ylim([pmi-1,pm+1])
 		plt.xlim([0,xm])
 
@@ -44,4 +53,4 @@ def make_bplot(sig):
 		plt.clf()
 
 if __name__=="__main__":
-	make_plot('notes_data',14400)
+	make_bplot('notes',['base'])
