@@ -11,10 +11,13 @@ print("Check output mode: chained vs. superimposed")
 
 f = raw_input("File to be transformed? ")
 #f = ('notes')
-plot = raw_input("Pretty, XKCD or Bode plot? Please type 'pretty','bode' or 'xkcd'.")
+plot = raw_input("Pretty or Bode plot? Please type 'pretty' or 'bode'.")
 
 filterlist = raw_input("Filter names? Separate filters with a space.").split(' ')
 #filterlist = ('high300.txt,low4000.txt').split(',')
+
+if filterlist[0] == '':
+	filterlist.pop(0)
 
 filternames = {}
 filtered_aud = {}
@@ -31,7 +34,8 @@ path = sig + '_data'
 if not os.path.exists(path):os.mkdir(path)
 
 for name in filterlist:
-	filtertext = (open('/filters'+name+'.txt', 'r').read()).split()
+	filtertext = (open('filters/'+name+'.txt', 'r').read()).split()
+
 
 	for val in filtertext:
 		if val != ' ':
