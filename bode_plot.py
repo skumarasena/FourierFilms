@@ -50,9 +50,13 @@ def make_bplot(sig,to_plot):
 		fig.subplots_adjust(hspace = .3)
 		plt.legend(bbox_to_anchor=(1.1,1.4))
 
-		plt.savefig(dirname+'/bode'+str(i)+'.png')
+		if len(to_plot)>1:
+			plt.savefig(dirname+'/bode'+to_plot[1]+str(i)+'.png')
+
+		else:
+			plt.savefig(dirname+'/bode'+str(i)+'.png')
 		plt.clf()
 
 if __name__=="__main__":
-	make_bplot('notes',['base'])
+	make_bplot('pompeii',['base','comb1001000'])
 

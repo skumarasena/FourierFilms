@@ -7,6 +7,8 @@ import pretty_plot as pplot
 import numpy as np
 import os
 
+filterlist = []
+filtertext = ""
 print("Check output mode: chained vs. superimposed")
 
 f = raw_input("File to be transformed? ")
@@ -34,24 +36,29 @@ path = sig + '_data'
 if not os.path.exists(path):os.mkdir(path)
 
 for name in filterlist:
-	filtertext = (open('filters/'+name+'.txt', 'r').read()).split()
+	filtertext = (open("Filters/IdealFilters/"+name+'.txt', 'r').read()).split()
 
+for val in filtertext:
+	if val != ' ':
+		filternames[name].append(float(val))
 
-	for val in filtertext:
-		if val != ' ':
-			filternames[name].append(float(val))
-
-	#Enable this to calculate the results of each filter evaluated separately
+#Enable this to calculate the results of each filter evaluated separately
 	filtered_aud[name] = np.convolve(filternames[name],orig_aud)
 	four.get_freqs(filtered_aud[name],rate,sig,name)
 
-	#Use this line to calculate the results of all filters chained together
-	#total_aud = np.convolve(filternames[name],total_aud)
+#Use this line to calculate the results of all filters chained together
+#total_aud = np.convolve(filternames[name],total_aud)
 
 #Use this to see all filters chained
 #four.get_freqs(total_aud,rate,sig,'total')
 
 dirname, rate, interval = four.get_freqs(orig_aud,rate,sig,'base')
+print filtered_aud
+print filterlist
+
+#wavf.write(sig+filterlist[0]+'.wav',rate, np.round(filtered_aud[filterlist[0]]*10000).astype('int16'))
+
+print dirname
 
 #Enable this to see the results of all filters superimposed on each other
 to_plot = ['base'] + filternames.keys()
@@ -62,4 +69,3 @@ to_plot = ['base'] + filternames.keys()
 if plot == 'bode': bplot.make_bplot(dirname,to_plot)
 elif plot == 'pretty': pplot.make_pplot(dirname,to_plot)
 vid.make_video(dirname,plot)
-
