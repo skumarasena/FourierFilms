@@ -1,3 +1,10 @@
+"""
+Opens a series of files and plots their content as a Bode plot. For use with the FourierFilms
+project, due to specific filenaming conventions.
+
+Emily Tumang, Samantha Kumarasena, Claire Keum
+5/5/14
+"""
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -9,11 +16,13 @@ def make_bplot(sig,to_plot):
 	phase = {}
 	amp = {}
 
-	for name in to_plot:#todo... adapt this to multiple data sets
+	for name in to_plot:#load filtered and base data into dictionaries
 		freqs[name] = np.load(dirname+'/'+name+'_freqs.npy')
 		phase[name] = np.load(dirname+'/'+name+'_phase.npy')
 		amp[name] = np.load(dirname+'/'+name+'_amp.npy') 
 
+	#assumes filtered data will never have an amplitude, phase or frequency larger than 
+	#the largest of these of the base
 	xm = np.amax(freqs['base'])
 
 	am = np.amax(amp['base'])
@@ -46,9 +55,12 @@ def make_bplot(sig,to_plot):
 		plt.ylim([pmi-1,pm+1])
 		plt.xlim([0,xm])
 
+
+		#shift figures around for looks and to fit the legend correctly
 		fig = plt.gcf()
 		fig.subplots_adjust(hspace = .3)
 		plt.legend(bbox_to_anchor=(1.1,1.4))
+
 
 		if len(to_plot)>1:
 			plt.savefig(dirname+'/bode'+to_plot[1]+str(i)+'.png')
@@ -58,5 +70,6 @@ def make_bplot(sig,to_plot):
 		plt.clf()
 
 if __name__=="__main__":
+	#this assumes these files alredy exist in pompeii_data.
 	make_bplot('pompeii',['base','comb1001000'])
 

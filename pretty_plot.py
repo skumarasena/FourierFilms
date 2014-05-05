@@ -1,3 +1,10 @@
+"""
+Opens a series of files and plots their content as a Bode plot. For use with the FourierFilms
+project, due to specific filenaming conventions.
+
+Emily Tumang, Samantha Kumarasena, Claire Keum
+5/5/14
+"""
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -10,7 +17,8 @@ def make_pplot(sig,to_plot):
 	amp = {}
 	colorlist = 'brg'
 
-	for name in to_plot:#todo... adapt this to multiple data sets
+	#load data into dictionaries by filter name
+	for name in to_plot:
 		freqs[name] = np.load(dirname+'/'+name+'_freqs.npy')
 		phase[name] = np.load(dirname+'/'+name+'_phase.npy')
 		amp[name] = np.load(dirname+'/'+name+'_amp.npy') 
@@ -29,6 +37,7 @@ def make_pplot(sig,to_plot):
 		plt.xlabel('Frequency (Hz)')
 		plt.ylabel('Magnitude')
 
+		#create a bar plot, shifting the bars by 1/2 a bar width each time a new filter is applied
 		for j in range(0, len(to_plot)):
 			plt.bar(freqs[to_plot[j]][i]+2*j,amp[to_plot[j]][i],width = .5,label = to_plot[j],color = colorlist[j],edgecolor = colorlist[j])
 
